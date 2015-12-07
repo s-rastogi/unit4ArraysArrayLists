@@ -8,12 +8,18 @@ public class CharMatrix
   // and fills it with spaces
   public CharMatrix(int rows, int cols)
   {
-    ...
-  }
+    this.grid = new char[row][cols];
+    
+    for (int i = 0; i < this.grid.length;i++)
+    {
+        for (int j = 0; j < this.grid.width; j++)
+        {
+        }
+    }
 
   // Constructor: creates a grid with dimensions rows , cols ,
   // and fills it with the fill  character
-  public CharMatrix(int rows, int cols, char fill)
+   public CharMatrix(int rows, int cols, char fill)
   {
     ...
   }

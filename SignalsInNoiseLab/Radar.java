@@ -2,8 +2,8 @@
 /**
  * The model for radar scan and accumulator
  * 
- * @author @gcschmit
- * @version 19 July 2014
+ * @author srastogi
+ * @version 19 December 15 2015
  */
 public class Radar
 {
@@ -34,12 +34,13 @@ public class Radar
     public Radar(int rows, int cols)
     {
         // initialize the currentScan 2D array and the accumulator 2D array
-        
-        
         //
         // !!! add code here !!!
         //
+             
+        currentScan = new boolean[rows][cols] ;
         
+        accumulator = new int[rows][cols];
         
         // randomly set the location of the monster (can be explicity set through the
         //  setMonsterLocation method for the unit test
@@ -63,32 +64,53 @@ public class Radar
         //    4. update the accumulator 2D array based on the state of the currentScan 2D array
         //    5. increment the numScans instance variable
         
-        
         //
         // !!! add code here !!!
         //
+        for(int i = 0; i < currentScan.length;i++)
+        {
+            for( int j = 0; j < currentScan[0].length ; j++)
+            {
+                currentScan[i][j] = false;
+            }
+        }
         
+       this.setMonsterLocation(monsterLocationRow,monsterLocationCol);
+       this.injectNoise();
         
+        for(int i = 0; i < currentScan.length; i++)
+        {
+            for( int j = 0; j < currentScan[0].length ; j++)
+            {
+               if(currentScan[i][j])
+               {
+                  accumulator[i][j]++;
+               }
+            }
+        }
+       
+       numScans++;
     }
-
-    /**
-     * Sets the location of the monster
-     * 
-     * @param   row     the row in which the monster is located
-     * @param   col     the column in which the monster is located
-     * @pre row and col must be within the bounds of the radar grid
-     */
+   
+       /**
+       * Sets the location of the monster
+       * 
+       * @param   row     the row in which the monster is located
+       * @param   col     the column in which the monster is located
+       * @pre row and col must be within the bounds of the radar grid
+       */
     public void setMonsterLocation(int row, int col)
     {
-        // remember the row and col of the monster's location
-        monsterLocationRow = row;
-        monsterLocationCol = col;
+       // remember the row and col of the monster's location
+       monsterLocationRow = row;
+       monsterLocationCol = col;
         
-        // update the radar grid to show that something was detected at the specified location
-        currentScan[row][col] = true;
+       // update the radar grid to show that something was detected at the specified location
+       currentScan[row][col] = true;
+  
     }
-    
-     /**
+     
+       /**
      * Sets the probability that a given cell will generate a false detection
      * 
      * @param   fraction    the probability that a given cell will generate a flase detection expressed
@@ -170,6 +192,16 @@ public class Radar
         //
         // !!! add code here !!!
         //
+        for (int i = 0; i < currentScan.length; i++)
+        {
+            for(int j = 0; j < currentScan[0].length;j++)
+            {
+                if (Math.random() <= this.noiseFraction)
+                {
+                    currentScan[i][j] = true;
+                }
+            }
+        }
         
         
     }
